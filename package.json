@@ -1,0 +1,16 @@
+{
+  "name": "data-mining",
+  "version": "1.0.0",
+  "description": "reading note on data mining",
+  "scripts": {
+    "start": "pholio start",
+    "build": "pholio clean && pholio build"
+  },
+  "author": "wemlion <angusfu1126@qq.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "pholio": "0.2.0-alpha.1",
+    "postcss-import": "^11.1.0",
+    "postcss-preset-env": "^5.3.0"
+  }
+}
