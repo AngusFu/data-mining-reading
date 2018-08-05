@@ -1,5 +1,5 @@
 <template lang="pug">
-  .app
+  .app(:style="style")
     .navbar
       router-link(tag="div" to="/").site-title data mining
       router-link.navbar__item(
@@ -12,7 +12,15 @@
 </template>
 
 <script>
+const isProd = process.env.NODE_ENV === 'production'
 export default {
+  data () {
+    return {
+      style: isProd ? null : {
+        'margin-bottom': '400px'
+      }
+    }
+  },
   computed: {
     currentPage() {
       const path = this.$route.path;

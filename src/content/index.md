@@ -13,6 +13,11 @@ index: 1
 - 兴趣
 - 职业发展
 
+## 目的
+
+- 学习笔记，防止遗忘
+- 降低阅读速度，尽量多消化理解
+- 吃自己的狗粮，测试 [pholio](https://github.com/clair-design/pholio)
 
 ## 参考书籍
 
@@ -21,3 +26,8 @@ index: 1
 ## 文档工具
 
 - [pholio](https://github.com/clair-design/pholio)
+
+## 其他资源
+
+- [antv 官网文档](https://antv.alipay.com/zh-cn/vis/chart/index.html)
+- [An Introduction to Information Visualization Techniques for Exploring Large Databases](https://graphics.ethz.ch/teaching/scivis_common/Literature/keim-Tutorial2000.pdf)

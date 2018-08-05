@@ -50,12 +50,10 @@ $\bigg\lbrace{
 \end{alignedat}
 }$
 
-$ΩABΓΔEZHΘIKΛMNΞOΠPΣTΥΦXΨΩ$
-
 $\boxed{\pi=\frac c d}$
 
 
-$\left(x^{\smash{2}}\right) \qquad	22 $
+$\left(x^{\smash{2}}\right) \qquad y^2 $
 
 $\cos{xxx}$
 
@@ -65,7 +63,7 @@ $\underbrace{ a + b + \cdots + z}_{\text{26 letters}}$
 
 $\vec{a}$
 
-$\overrightarrow{\text{测试测试}}$
+$\overrightarrow{\text{AB}}$
 
 $ \LARGE \frac{1}{2}$
 
