@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "reading note on data mining",
   "scripts": {
-    "start": "pholio start",
-    "build": "pholio clean && pholio build"
+    "start": "npm run clean && pholio start",
+    "clean": "pholio clean && rm -rf docs",
+    "build": "npm run clean && pholio build"
   },
   "author": "wemlion <angusfu1126@qq.com>",
   "license": "MIT",

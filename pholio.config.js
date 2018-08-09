@@ -20,6 +20,8 @@ module.exports = {
   externals: [
     'https://lib.baomitu.com/normalize/8.0.0/normalize.min.css',
     'https://lib.baomitu.com/highlight.js/9.12.0/styles/github.min.css',
-    'https://lib.baomitu.com/KaTeX/0.9.0/katex.min.css'
+    'https://lib.baomitu.com/KaTeX/0.9.0/katex.min.css',
+    'https://unpkg.com/simple-statistics@6.1.0/dist/simple-statistics.min.js',
+    'https://unpkg.com/propel@3.3.1/propel.js'
   ]
 }

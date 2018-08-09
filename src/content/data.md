@@ -24,9 +24,9 @@ meta:
 
 | 类型    | 说明 | 其他 |
 | ------- | ---- | --- |
-| $nominal$ | 代表某种类别、编码、状态，分类的，非定量数据 | 无法用均值、中值衡量；可以用众数衡量。<br/>如颜色、职业等 |
+| $nominal$ | 代表某种类别、编码、状态，分类的，非定量数据 | （定类）无法用均值、中值衡量；可以用众数衡量。<br/>如颜色、职业等 |
 | $binary$  | **对称**：对取值无偏好，价值、权重相同，如男女性别；<br/>**非对称**：状态结果不是同等重要的，如化验结果阴阳 | - |
-| $ordinal$ | 有序的，但差值无意义 | 如满意度，小杯中杯大杯等|
+| $ordinal$ | （定序）有序的，但差值无意义 | 如满意度，小杯中杯大杯等|
 | $numeric$ | **区间标度**（$\text{interval-scaled}$）：$\degree C$、$AD 2018$<br/>**比率标度**（$\text{ratio-scaled}$）：$\degree K$ | $\text{ratio-scaled}$ 属性具有固定零点，可以计算比例 |
 
 此外，还有按照**离散**、**连续**来区分数据。
@@ -140,3 +140,94 @@ $
   \small{d(n, 1)} & \small{d(n, 2)} & \cdots & \cdots & 0 \\
 \end{bmatrix}
 $
+
+### $nominal$ 属性的邻近性度量
+
+对象 $i$ 和 $j$ 之间的相异性，可以通过**不匹配类率**来计算。在下面的公式中，$p$ 是对象属性总数，$m$ 是 $i$、$j$ 取值相同的属性数量 ——
+
+$$
+d(i, j) = \frac{p -m }{p}
+$$
+
+
+### $binary$ 属性的邻近性度量
+
+#### 对称二元属性的相异性
+
+$$
+d(i, j) = \frac{r + s}{q + r + s + t}
+$$
+
+- $q$：$i$ 和 $j$ 同时取 $1$ 或 $true$ 的属性数量
+- $r$：$i$ 中取 $1$、$j$ 中取 $0$ 的属性数量
+- $s$：$i$ 中取 $0$、$j$ 中取 $1$ 的属性数量
+- $t$：$i$ 和 $j$ 同时取 $0$ 或 $false$ 的属性数量
+- 容易得到，$p = q + r + s + t$
+- 说白了就是两个取值相异的概率，即 $P(i \neq j)$
+
+#### 非对称二元属性的相异性
+
+对于非对称二元属性，通常**正匹配**被认为更重要，所以会忽略 $t$。
+
+$$
+d(i, j) = \frac{r + s}{q + r + s}
+$$
+
+非对称的二元相似性 $sim(i, j) = 1 - d(i, j)$。
+
+另外，$sim(i, j)$ 又被成为 **$Jaccard$ 系数**。
+
+### $numeric$ 属性的相异性度量
+
+- 欧几里得距离：直线距离（属性有权重的情况：加权的欧几里得距离）
+- 街区距离：曼哈顿距离，网格距离
+- 闵可夫斯基距离：$L_p$ 范数$\tiny\text{（这里的\enspace p \enspace 就是属性数量\enspace h）}$
+
+$$
+d(i, j) = \sqrt[h]{
+  \vert x_{i1} - x_{j1}\vert^h +
+  \cdots +
+  \vert x_{ip} - x_{jp}\vert^h
+}
+$$
+
+- 上确界距离：$L_{max}$，$L_{\infty}$ 范数，切比雪夫距离
+
+$$
+d(i, j) = \overset{p}{\underset{f}{\max}} \vert x_{if} - x_{jf} \vert 
+$$
+
+
+### $ordinal$ 属性的邻近度量
+
+按照排位（$ranking$）归一化为数值后计算距离。
+
+### 混合类型属性的相异性计算
+
+描述起来有点复杂，留个在线的[链接](http://book.51cto.com/art/201212/370040.htm)吧。下面是截图 ——
+
+![](https://ws3.sinaimg.cn/large/0069RVTdly1fu0br8jx0dj312f0ueq56.jpg){style="max-width:600px"}
+
+
+### 余弦相似性
+
+以**词频向量**为例，两个向量可能有很多公共的 $0$ 字段。而其实我们只关注两个向量**确实**共有的词及其出现的频率。也就是说，需要一种忽略零匹配的数据度量方法。
+
+$$
+\cos{\theta} = \frac{\mathbf{x} \cdot \mathbf{y}} {
+  \Vert \mathbf{x} \Vert 
+  \Vert \mathbf{y} \Vert
+}
+$$
+
+当属性是 $binay$ 属性时的一种解释：分子是两者共有的值为 $1$ 的属性数，分母是两者各自值为 $1$ 的属性数的算术平均。
+
+变种：**$Tanimoto$ 距离** ——
+
+$$
+\cos{\theta} = \frac{\mathbf{x} \cdot \mathbf{y}} {
+  \mathbf{x} \cdot \mathbf{x} +
+  \mathbf{y} \cdot \mathbf{y} -
+  \mathbf{x} \cdot \mathbf{y}
+}
+$$

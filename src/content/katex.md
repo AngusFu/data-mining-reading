@@ -1,7 +1,7 @@
 ---
 title: KaTex
 route: /KaTex
-index: 3
+index: 9999
 ---
 
 # KaTex 练习
