@@ -33,8 +33,9 @@ index: 3
 
 得到数据集的简化表示。
 
-- 维归约：压缩（小波变换、主成分分析），属性子集选择，属性构造
-- 数值归约：使用参数模型或非参数模型，用较小的表示取代数据
+- 维归约：压缩（小波变换、（PCA）），属性子集选择，属性构造
+- 数量归约：使用参数模型或非参数模型，用较小的表示取代数据
+- 数据压缩：对数据进行变换。有损、无损。上面两点也可以视为某种程度的数据压缩
 
 #### 数据变换
 
@@ -126,5 +127,109 @@ import numpy as np
 from scipy.stats import chi2_contingency
 data = np.array([[43, 96], [28, 84]])
 chi2, p, dof, ex = chi2_contingency(data, correction=False)
+# 1.07709494376 False
 print(chi2, p < 0.05)
 ```
+
+#### 相关系数
+
+$\text{Pearson's product moment coefficient}$
+
+负相关、正相关：$ -1 \leqslant r_{\scriptsize{A,B}} \leqslant 1$
+
+注意，相关性并不意味着存在因果关系。
+
+$$
+r_{\scriptsize{A,B}} = \frac{
+  \displaystyle\sum_{i=1}^{n}{
+    (a_i - \overline{A})(b_i - \overline{B})
+  }
+}{n\sigma_{\scriptsize{A}}\sigma_{\scriptsize{B}}}
+= \frac{
+  \displaystyle\sum_{i=1}^{n}{
+    (a_i b_i) - \overline{A}\thinspace\overline{B}
+  }
+}{n\sigma_{\scriptsize{A}}\sigma_{\scriptsize{B}}}
+$$
+
+<table style="max-width: 400px">
+<tbody><tr>
+<th>年广告费投入</th><th>月均销售额
+</th></tr>
+<tr>
+<td>12.5<br>15.3<br>23.2<br>26.4<br>33.5<br>34.4<br>39.4<br>45.2<br>55.4<br>60.9</td><td>21.2<br>23.9<br>32.9<br>34.1<br>42.5<br>43.2<br>49.0<br>52.8<br>59.4<br>63.5
+</td></tr></tbody></table>
+
+数据来源：[wiki.mbalib.com](http://wiki.mbalib.com/wiki/%E7%9B%B8%E5%85%B3%E7%B3%BB%E6%95%B0)
+
+```python
+import numpy as np
+
+ad_cost_per_year = np.array([12.5, 15.3, 23.2, 26.4, 33.5, 34.4, 39.4, 45.2, 55.4, 60.9])
+monthly_sales = np.array([21.2, 23.9, 32.9, 34.1, 42.5, 43.2, 49.0, 52.8, 59.4, 63.5])
+
+N = ad_cost_per_year.shape[0]
+r = np.divide(
+  np.sum(ad_cost_per_year * monthly_sales) - N * np.mean(ad_cost_per_year) * np.mean(monthly_sales),
+  N * np.std(ad_cost_per_year) * np.std(monthly_sales)
+)
+
+# 0.994198376237 正相关
+print(r, r > 0 and '正相关' or ( r < 0 and '负相关' or '无关'))
+```
+
+```python
+from scipy.stats import pearsonr
+r, p = pearsonr(ad_cost_per_year, monthly_sales)
+print(r, p < 0.005)
+```
+
+#### 协方差
+
+协方差（$covariance$）用于评估两个属性如何一起变化。
+
+$$
+Cov(A, B) = E((A - \overline{A})(B - \overline{B})) = \frac{
+  \displaystyle\sum_{i=1}^{n}{
+    (a_i - \overline{A})(b_i - \overline{B})
+  }
+}{n}
+$$
+
+$$
+r_{\scriptsize{A,B}} = \frac{Cov(A, B)}{\sigma_{\scriptsize{A}}\sigma_{\scriptsize{B}}}
+$$
+
+$$
+Cov(A, B) = E(A \cdot B) - \overline{A} \thinspace \overline{B}
+$$
+
+```python
+np.cov(np.vstack((monthly_sales, ad_cost_per_year)), bias=True)
+```
+
+## 数据归约
+
+### 小波变换
+
+- 离散小波变换：DWT
+- 连续的小波变换 ：CWT
+- 实际应用：指纹图像压缩，计算机视觉，时间序列数据分析，数据清理
+
+阅读材料：
+- [小波变换教程：基本原理](http://blog.jobbole.com/101976/)
+- [小波变换及其应用](http://www3.ntu.edu.sg/home/yfzhou/Publications/wavelet.pdf)
+- [小波分析](reference.wolfram.com/language/guide/Wavelets.html.zh)
+- [知乎：傅立叶分析和小波分析之间的关系](https://www.zhihu.com/question/22864189)
+- [数据分析——数据预处理](http://blog.superyoung.win/2017/04/09/learning_data_analysis_with_python/about_data_preprocessing/)
+
+
+### 主成分分析（PCA）
+
+参见 [http://book.51cto.com/art/201212/370059.htm](http://book.51cto.com/art/201212/370059.htm)
+
+阅读：[K-means和PCA主成分分析](https://cowry5.com/2018/05/29/180529-K-means%E5%92%8CPCA%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/)
+
+<hr/>
+
+> 余下内容直接[阅读原文](http://book.51cto.com/art/201212/369928.htm)
