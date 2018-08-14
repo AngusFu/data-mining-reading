@@ -83,7 +83,7 @@ $$
 
 [![](https://ws3.sinaimg.cn/large/006tNc79ly1ftz7ivxt1oj312i0lu0tf.jpg){style="max-width: 600px;"}](https://antv.alipay.com/zh-cn/g2/3.x/demo/index.html)
 
-- 三点矩阵：可以参见 antv 的[矩阵分面](https://antv.alipay.com/zh-cn/g2/3.x/demo/facet/matrix.html)
+- 散点矩阵：可以参见 antv 的[矩阵分面](https://antv.alipay.com/zh-cn/g2/3.x/demo/facet/matrix.html)
 
 - 平行坐标可视化：数据过多的时候可读性差
 
